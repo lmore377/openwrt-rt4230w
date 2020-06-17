@@ -3,6 +3,8 @@ Work-in-progress OpenWRT firmware for the RT4230W router from Askey
 
 Follow progress here: https://forum.openwrt.org/t/askey-rac2v1k-support/15830
 
+Since this image uses the space taken by both rootfs partitions, it'll be impossible to revert to stock.
+
 Steps to install
 
     Open the router and connect to the serial console
@@ -20,12 +22,14 @@ Steps to install
     Interrupt U-Boot and run these commands:
     setenv serverip 10.42.0.1 (You can use whatever ip you set for the computer)
     setenv ipaddr 10.42.0.10 (Can be any ip as long as it's in the same subnet)
-    tftpboot factory.bin
-
-    After running tftpboot, the last line should look something like this: Bytes transferred = 6684672 (660000 hex). Make note of the hex number then run the following commands:
-    nand erase 0x2400000 0x1A000000
-    nand write 0x4400000 0x2400000 0x(hex number from tftpboot)
     setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
     saveenv
-    reset
-    -The router should boot to openwrt at this point
+    tftpboot initramfs.bin
+    bootm
+    
+    After openwrt boots, copy the sysupgrade file to a usb flash drive, plug it into the router, and run these commands:
+    mount /dev/sda1 /mnt 
+    cd /mnt 
+    sysupgrade -F openwrt-ipq806x-generic-askey_rt4230w-squashfs-nand-sysupgrade.bin
+    
+    The router will reboot and if all went well, you'll now have openwrt running.
