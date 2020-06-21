@@ -22,7 +22,7 @@ Steps to install
     Interrupt U-Boot and run these commands:
     setenv serverip 10.42.0.1 (You can use whatever ip you set for the computer)
     setenv ipaddr 10.42.0.10 (Can be any ip as long as it's in the same subnet)
-    setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
+    setenv bootcmd "if bootipq; then echo a; else setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
     saveenv
     tftpboot initramfs.bin
     bootm
