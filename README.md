@@ -15,7 +15,7 @@ Steps to install
 
     Set a static ip on the ethernet interface of your computer
 
-    Download the factory image, rename it to factory.bin, and host it with the tftp server
+    Download the initramfs image, rename it to initramfs.bin, and host it with the tftp server
 
     Connect the wan port of the router to your computer
 
