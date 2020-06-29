@@ -3,7 +3,7 @@ Work-in-progress OpenWRT firmware for the RT4230W router from Askey
 
 Follow progress here: https://forum.openwrt.org/t/askey-rac2v1k-support/15830
 
-Warining: Don't install this if your renting the router from Spectrum. Since this image uses the space taken by both rootfs partitions, it'll be impossible to revert to stock and have it be stable (It just enters a bootloop and /overlay breaks)
+Warning: Don't install this if your renting the router from Spectrum. Since this image uses the space taken by both rootfs partitions, it'll be impossible to revert to stock and have it be stable (It just enters a bootloop and /overlay breaks)
 
 Steps to install
 
