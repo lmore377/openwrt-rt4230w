@@ -3,7 +3,9 @@ Work-in-progress OpenWRT firmware for the RT4230W router from Askey
 
 Follow progress here: https://forum.openwrt.org/t/askey-rac2v1k-support/15830
 
-Warning: Don't install this if your renting the router from Spectrum. Since this image uses the space taken by both rootfs partitions, it'll be impossible to revert to stock and have it be stable (It just enters a bootloop and /overlay breaks)
+Warning: Do not flash OpenWRT on this router if it's currently being rented from Spectrum. The stock FW has a dual partition layout for redundancy and flashing this image will wipe out both partitions and a partition with info for provisioning with Spectrum, so there will be no way to revert it back to stock. I tried backing up/restoring the original parts but it caused the ubi partition for overlay to become corrupted so settings would be cleared after a reboot.
+
+Note: Spectrum has a revision of this router that has no local web interface, a QR code on the back with SAC2V1K next to it, and the only way to change settings is through the My Spectrum app. This revision has a 256MB NAND chip but is otherwise identical. This image should work perfectly fine with that router but it's only been tested with initramfs so flash at your own risk.
 
 Steps to install
 
@@ -23,6 +25,9 @@ Steps to install
     setenv serverip 10.42.0.1 (You can use whatever ip you set for the computer)
     setenv ipaddr 10.42.0.10 (Can be any ip as long as it's in the same subnet)
     setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
+    
+    If you have a SAC2V1K router, use this bootcmd instead: "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0xDC00000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
+    
     saveenv
     tftpboot initramfs.bin
     bootm
