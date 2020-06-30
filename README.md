@@ -1,5 +1,5 @@
 # openwrt-rt4230w-rev6
-Work-in-progress OpenWRT firmware for the RT4230W router from Askey
+Work-in-progress OpenWRT firmware for the RT4230W router from Askey (Branded as RAC2V1K and SAC2V1K by Spectrum)
 
 Follow progress here: https://forum.openwrt.org/t/askey-rac2v1k-support/15830
 
