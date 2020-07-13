@@ -65,3 +65,7 @@ Flashing with serial access (Optional for RAC2V1K, Required for SAC2V1K)
     After openwrt boots, figure out a way to flash the sysupgrade file (luci, sftp, flash drive, etc.)
     
     The router will reboot and if all went well, you'll now have openwrt running.
+
+@efsg on the openwrt forums - Provided zip file for getting root
+@eganov, @ghoffman, @efsg on the forum for help with testing
+A few people on the irc channel for helping (Sorry, can't remember names.)
