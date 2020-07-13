@@ -7,7 +7,37 @@ Warning: Do not flash OpenWRT on this router if it's currently being rented from
 
 Note: Spectrum has a revision of this router that has no local web interface, a QR code on the back with SAC2V1K next to it, and the only way to change settings is through the My Spectrum app. This revision has a 256MB NAND chip but is otherwise identical. This image should work perfectly fine with that router but it's only been tested with initramfs so flash at your own risk.
 
-Steps to install
+Flashing without opening the case (Only for RAC2V1K)
+    
+    Connect to one of the router's LAN ports
+    
+    Download the RAC2V1K-SSH.zip file and restore the config file that corresponds to your router's firmware (If you're firmware is newer than what's in the zip file, just restore the 1.1.16 file)
+    
+    After a reboot, you should be able to ssh into the router with username: "4230w" and password: "linuxbox" or "admin". Run the following commannds
+    fw_setenv ipaddr 10.42.0.10 #IP of router, can be anything
+    fw_setenv serverip 10.42.0.1# #IP of tftp server that's set up in next steps
+    fw_setenv bootdelay 5
+    fw_setenv bootcmd "tftpboot initramfs.bin; bootm; bootipq"
+    
+    Don't reboot the router yet.
+    
+    Install and set up a tftp server on your computer
+
+    Set a static ip on the ethernet interface of your computer (use this for serverip in the above commands)
+
+    Download the initramfs image, rename it to initramfs.bin, and host it with the tftp server
+    
+    Reboot the router. If you set up everything right, the router led should switch over to a slow blue glow which means openwrt is booted.
+    After openwrt boots, ssh into it (root user, no password) and run these commands:
+    fw_setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
+    fw_setenv bootdelay 2
+    
+    After this, find some way to flash the sysupgrade image (luci, sftp, flash drive, etc.) 
+    As the router reboots, unplug the ethernet cord to make sure it's not trying to boot over tftp again.
+    The router will reboot and if all went well, you'll now have openwrt running.
+
+
+Flashing with serial access (Optional for RAC2V1K, Required for SAC2V1K)
 
     Open the router and connect to the serial console
         Top lid is clipped on and taking it out reveals 2 screws
@@ -32,9 +62,6 @@ Steps to install
     tftpboot initramfs.bin
     bootm
     
-    After openwrt boots, copy the sysupgrade file to a usb flash drive, plug it into the router, and run these commands:
-    mount /dev/sda1 /mnt 
-    cd /mnt 
-    sysupgrade -F openwrt-ipq806x-generic-askey_rt4230w-squashfs-nand-sysupgrade.bin
+    After openwrt boots, figure out a way to flash the sysupgrade file (luci, sftp, flash drive, etc.)
     
     The router will reboot and if all went well, you'll now have openwrt running.
