@@ -10,7 +10,8 @@ Warning: Do not flash OpenWRT on this router if it's currently being rented from
 
 Note: Spectrum has a revision of this router that has no local web interface, a QR code on the back with SAC2V1K next to it, and the only way to change settings is through the My Spectrum app. This revision has a 256MB NAND chip but is otherwise identical. This image should work perfectly fine with that router but it's only been tested with initramfs so flash at your own risk.
 
-Flashing without opening the case (Only for RAC2V1K)
+<details>
+<summary>Method 1: Install without opening the case using SSH and tftp (Only works for RAC2V1K)</summary>
     
     Connect to one of the router's LAN ports
     
@@ -32,19 +33,19 @@ Flashing without opening the case (Only for RAC2V1K)
     
     Reboot the router. If you set up everything right, the router led should switch over to a slow blue glow which means openwrt is booted.
     After openwrt boots, ssh into it (root user, no password) and run these commands:
-    fw_setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
+    fw_setenv bootcmd "if bootipq; then echo a; else setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
     fw_setenv bootdelay 2
     
     After this, find some way to flash the sysupgrade image (luci, sftp, flash drive, etc.) 
     As the router reboots, unplug the ethernet cord to make sure it's not trying to boot over tftp again.
     The router will reboot and if all went well, you'll now have openwrt running.
+</details>
 
 
-Flashing with serial access (Optional for RAC2V1K, Required for SAC2V1K)
+<details>
+<summary>Method 2: Install with serial access (Do this if something fails and you can't boot after using method 1) (Works with RAC2V1K and SAC2V1K) </summary>
 
-    Open the router and connect to the serial console
-        Top lid is clipped on and taking it out reveals 2 screws
-        If you see serial output but can't interrupt uboot, go look at this post: https://forum.openwrt.org/t/askey-rac2v1k-support/15830/21 You'll probably need to remove the wifi card to unscrew and remove the board.
+    Open the router and connect to the serial console. Instructions can be found here: https://openwrt.org/inbox/toh/askey/askey_rt4230w_rev6#opening_the_case
 
     Install and set up a tftp server
 
@@ -57,9 +58,9 @@ Flashing with serial access (Optional for RAC2V1K, Required for SAC2V1K)
     Interrupt U-Boot and run these commands:
     setenv serverip 10.42.0.1 (You can use whatever ip you set for the computer)
     setenv ipaddr 10.42.0.10 (Can be any ip as long as it's in the same subnet)
-    setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
+    setenv bootcmd "if bootipq; then echo a; else setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
     
-    If you have a SAC2V1K router, use this bootcmd instead: "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0xDC00000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
+    If you have a SAC2V1K router, use this bootcmd instead: "if bootipq; then echo a; else setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0xDC00000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
     
     saveenv
     tftpboot initramfs.bin
@@ -68,6 +69,7 @@ Flashing with serial access (Optional for RAC2V1K, Required for SAC2V1K)
     After openwrt boots, figure out a way to flash the sysupgrade file (luci, sftp, flash drive, etc.)
     
     The router will reboot and if all went well, you'll now have openwrt running.
+</details>
 
 @efsg on the openwrt forums - Provided zip file for getting root
 @eganov, @ghoffman, @efsg on the forum for help with testing
