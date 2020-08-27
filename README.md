@@ -1,6 +1,6 @@
 # openwrt-rt4230w-rev6
 
-# Development has been paused for a bit. I'm using the router I was using for testing as my normal home router now (But on the bright side, it's been running for over a month now without problems). I'll resume development when I can get my hands on another one.
+# Development is a bit slowed down because school but still ongoing. 
 
 Work-in-progress OpenWRT firmware for the RT4230W router from Askey (Branded as RAC2V1K and SAC2V1K by Spectrum)
 
