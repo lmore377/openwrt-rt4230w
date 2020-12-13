@@ -1,6 +1,6 @@
 # openwrt-rt4230w-rev6
 
-# Development is a bit slowed down because school but it's still ongoing. 
+# I built all the packages so kernel modules can be installed with no conflits. Just replace the distfeeds.conf in /etc/opkg with the one in this repo.
 
 Work-in-progress OpenWRT firmware for the RT4230W router from Askey (Branded as RAC2V1K and SAC2V1K by Spectrum)
 
@@ -71,6 +71,6 @@ Note: Spectrum has a revision of this router that has no local web interface, a 
     The router will reboot and if all went well, you'll now have openwrt running.
 </details>
 
-@efsg on the openwrt forums - Provided zip file for getting root
+Thanks to: @efsg on the openwrt forums - Provided zip file for getting root
 @eganov, @ghoffman, @efsg on the forum for help with testing
 A few people on the irc channel for helping (Sorry, can't remember names.)
