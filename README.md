@@ -15,9 +15,10 @@ Note: Spectrum has a revision of this router that has no local web interface, a 
     
     Connect to one of the router's LAN ports
     
-    Download the RAC2V1K-SSH.zip file and restore the config file that corresponds to your router's firmware (If you're firmware is newer than what's in the zip file, just restore the 1.1.16 file)
+    Download the RAC2V1K-SSH.zip file and restore the config file that corresponds to your router's firmware (If you're firmware is newer than what's in the zip file, just restore the latest file)
     
-    After a reboot, you should be able to ssh into the router with username: "4230w" and password: "linuxbox" or "admin". Run the following commannds
+    After a reboot, you should be able to ssh into the router with the username for your firmware in the readme.
+    Run the following commannds:
     fw_setenv ipaddr 10.42.0.10 #IP of router, can be anything
     fw_setenv serverip 10.42.0.1# #IP of tftp server that's set up in next steps
     fw_setenv bootdelay 5
@@ -33,7 +34,7 @@ Note: Spectrum has a revision of this router that has no local web interface, a 
     
     Reboot the router. If you set up everything right, the router led should switch over to a slow blue glow which means openwrt is booted.
     After openwrt boots, ssh into it (root user, no password) and run these commands:
-    fw_setenv bootcmd "if bootipq; then echo a; else setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
+    fw_setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
     fw_setenv bootdelay 2
     
     After this, find some way to flash the sysupgrade image (luci, sftp, flash drive, etc.) 
@@ -58,9 +59,9 @@ Note: Spectrum has a revision of this router that has no local web interface, a 
     Interrupt U-Boot and run these commands:
     setenv serverip 10.42.0.1 (You can use whatever ip you set for the computer)
     setenv ipaddr 10.42.0.10 (Can be any ip as long as it's in the same subnet)
-    setenv bootcmd "if bootipq; then echo a; else setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
+    setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
     
-    If you have a SAC2V1K router, use this bootcmd instead: "if bootipq; then echo a; else setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0xDC00000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
+    If you have a SAC2V1K router, use this bootcmd instead: "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0xDC00000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
     
     saveenv
     tftpboot initramfs.bin
