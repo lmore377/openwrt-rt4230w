@@ -62,7 +62,7 @@ Note: Spectrum has a revision of this router that has no local web interface, a 
     setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0x1A000000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
     
     If you have a SAC2V1K router, use this bootcmd instead: 
-    setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0xDC00000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm; fi"
+    setenv bootcmd "setenv mtdids nand0=nand0 && set mtdparts mtdparts=nand0:0xDC00000@0x2400000(firmware) && ubi part firmware && ubi read 0x44000000 kernel 0x6e0000 && bootm"
     
     saveenv
     tftpboot initramfs.bin
