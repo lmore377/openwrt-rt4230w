@@ -1,6 +1,6 @@
 # openwrt-rt4230w-rev6
 
-# This branch will have images with improvements from nolseek.
+# This branch will have images with wifi improvements from nolseek.
 
 OpenWrt Forum: https://forum.openwrt.org/u/nolseek
 
