@@ -1,6 +1,6 @@
 # openwrt-rt4230w-rev6
 
-# I built all the packages so kernel modules can be installed with no conflicts. Just replace the distfeeds.conf in /etc/opkg with the one in this repo then do `opkg update`.
+## The pull request went through so I won't be building images anymore. You can find the snapshot builds [here.](https://downloads.openwrt.org/snapshots/targets/ipq806x/generic/)
 
 Work-in-progress OpenWRT firmware for the RT4230W router from Askey (Branded as RAC2V1K and SAC2V1K by Spectrum)
 
