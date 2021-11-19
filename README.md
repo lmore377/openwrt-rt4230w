@@ -46,7 +46,7 @@ Note: Spectrum has a revision of this router that has no local web interface, a 
 <details>
 <summary>Method 2: Install with serial access (Do this if something fails and you can't boot after using method 1) (Works with RAC2V1K and SAC2V1K) </summary>
 
-    Open the router and connect to the serial console. Instructions can be found here: https://openwrt.org/inbox/toh/askey/askey_rt4230w_rev6#opening_the_case
+    Open the router and connect to the serial console. Instructions can be found here: https://openwrt.org/toh/hwdata/askey/askey_rt4230w_rev6
 
     Install and set up a tftp server
 
