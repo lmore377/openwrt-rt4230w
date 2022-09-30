@@ -1,15 +1,13 @@
 # openwrt-rt4230w-rev6
 
-## The pull request went through so I won't be building images anymore. You can find the snapshot builds [here.](https://downloads.openwrt.org/snapshots/targets/ipq806x/generic/)
-
-Work-in-progress OpenWRT firmware for the RT4230W router from Askey (Branded as RAC2V1K and SAC2V1K by Spectrum)
-
-Follow progress here: https://forum.openwrt.org/t/askey-rac2v1k-support/15830
+## Visit the device page for firmware downloads and installation instructions. https://openwrt.org/inbox/toh/askey/rt4230w_rev6
+OpenWRT Forum Thread: https://forum.openwrt.org/t/askey-rac2v1k-support/15830
 
 Warning: Do not flash OpenWRT on this router if it's currently being rented from Spectrum. The stock FW has a dual partition layout for redundancy and flashing this image will wipe out both partitions and a partition with info for provisioning with Spectrum, so there will be no way to revert it back to stock. I tried backing up/restoring the original parts but it caused the ubi partition for overlay to become corrupted so settings would be cleared after a reboot.
 
+<details>
+    <summary>Old installation instructions (for historical purposes. Don't use these)</summary>
 Note: Spectrum has a revision of this router that has no local web interface, a QR code on the back with SAC2V1K next to it, and the only way to change settings is through the My Spectrum app. This revision usually has a 256MB NAND chip but is otherwise identical. This image should work perfectly fine with that router but it's only been tested with initramfs so flash at your own risk.
-
 <details>
 <summary>Method 1: Install without opening the case using SSH and tftp (Only works for RAC2V1K)</summary>
     
@@ -72,7 +70,8 @@ Note: Spectrum has a revision of this router that has no local web interface, a 
     
     The router will reboot and if all went well, you'll now have openwrt running.
 </details>
+</details>
 
 Thanks to: @efsg on the openwrt forums - Provided zip file for getting root
 @eganov, @ghoffman, @efsg on the forum for help with testing
-A few people on the irc channel for helping (Sorry, can't remember names.)
+A few people on the irc channel for helping (Sorry, can't remember their names.)
